@@ -1,11 +1,14 @@
-package com.example.pickimagefromgallery
+package com.example.pickimagefromgallery.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.pickimagefromgallery.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PickImageFragment : Fragment() {
 
     override fun onCreateView(
@@ -14,6 +17,5 @@ class PickImageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pick_image, container, false)
-
     }
 }
