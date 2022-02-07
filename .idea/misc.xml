@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ali/Desktop/PickImageFromGallery/app/src/main/res/drawable/shape_corners.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/Ali/Desktop/PickImageFromGallery/app/src/main/res/layout/activity_main.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/Ali/Desktop/PickImageFromGallery/app/src/main/res/layout/fragment_pick_image.xml" value="0.203125" />
+        <entry key="..\:/Users/Ali/Desktop/PickImageFromGallery/app/src/main/res/layout/fragment_show_image.xml" value="0.2" />
         <entry key="..\:/Users/Ali/Desktop/PickImageFromGallery/app/src/main/res/layout/item_image.xml" value="0.2171875" />
       </map>
     </option>
