@@ -1,4 +1,4 @@
-package com.example.pickimagefromgallery.view
+package com.example.pickimagefromgallery.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

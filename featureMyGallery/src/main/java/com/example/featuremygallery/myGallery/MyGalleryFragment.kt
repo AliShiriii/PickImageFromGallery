@@ -1,7 +1,6 @@
-package com.example.pickimagefromgallery.view
+package com.example.featuremygallery.myGallery
 
 import android.Manifest
-import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,26 +13,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.pickimagefromgallery.adapter.ImageAdapter
-import com.example.pickimagefromgallery.databinding.FragmentPickImageBinding
-import com.example.pickimagefromgallery.model.ImageModel
-import com.example.pickimagefromgallery.utils.Contracts.IMAGE_CAMERA_CODE
-import com.example.pickimagefromgallery.utils.Contracts.IMAGE_GALLERY_CODE
-import com.example.pickimagefromgallery.utils.Contracts.PERMISSION_CODE
+import com.example.featuremygallery.databinding.FragmentMyGalleryBinding
+import com.example.featuremygallery.utils.Contracts.IMAGE_CAMERA_CODE
+import com.example.featuremygallery.utils.Contracts.IMAGE_GALLERY_CODE
+import com.example.featuremygallery.utils.Contracts.PERMISSION_CODE
+import com.example.repository.model.ImageModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 import java.lang.String
-import java.util.*
+import java.util.ArrayList
 
-
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
-class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
+class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
-    private var _binding: FragmentPickImageBinding? = null
+    private var _binding: FragmentMyGalleryBinding? = null
     private val binding get() = _binding!!
-    private lateinit var imageAdapter: ImageAdapter
+    private lateinit var myGalleryAdapter: MyGalleryAdapter
     private var imageModel: ImageModel? = null
     private lateinit var listImageModel: ArrayList<ImageModel>
 
@@ -43,7 +39,7 @@ class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
     ): View {
         // Inflate the layout for this fragment
 
-        _binding = FragmentPickImageBinding.inflate(inflater, container, false)
+        _binding = FragmentMyGalleryBinding.inflate(inflater, container, false)
 
         return binding.root
 
@@ -147,8 +143,8 @@ class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
 
                     listImageModel.add(imageModel!!)
 
-                    imageAdapter = ImageAdapter(listImageModel, this)
-                    binding.pickImageRecyclerView.adapter = imageAdapter
+                    myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
+                    binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
                     Toast.makeText(requireContext(), "Image Saved!", Toast.LENGTH_SHORT).show()
 
@@ -169,8 +165,8 @@ class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
 
             listImageModel.add(imageModel!!)
 
-            imageAdapter = ImageAdapter(listImageModel, this)
-            binding.pickImageRecyclerView.adapter = imageAdapter
+            myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
+            binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
             Toast.makeText(requireActivity(), "Image Saved!", Toast.LENGTH_SHORT).show()
         }
@@ -212,7 +208,7 @@ class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
                 PackageManager.PERMISSION_DENIED
             ) {
                 //permission denied
-                val permissions = arrayOf(permission.READ_EXTERNAL_STORAGE)
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
                 //Show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)

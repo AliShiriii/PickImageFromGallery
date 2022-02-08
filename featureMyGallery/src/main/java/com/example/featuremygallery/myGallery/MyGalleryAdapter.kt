@@ -1,10 +1,10 @@
-package com.example.myapplication.myGallery
+package com.example.featuremygallery.myGallery
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.databinding.ItemImageBinding
+import com.example.featuremygallery.databinding.ItemImageBinding
 import com.example.repository.model.ImageModel
 
 class MyGalleryAdapter(private val list: List<ImageModel>, private val onClickListener: SetOnClickListener) :
