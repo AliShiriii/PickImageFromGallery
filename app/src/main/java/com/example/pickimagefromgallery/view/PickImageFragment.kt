@@ -6,12 +6,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,20 +18,18 @@ import com.example.pickimagefromgallery.adapter.ImageAdapter
 import com.example.pickimagefromgallery.databinding.FragmentPickImageBinding
 import com.example.pickimagefromgallery.model.ImageModel
 import com.example.pickimagefromgallery.utils.Contracts.IMAGE_CAMERA_CODE
-import com.example.pickimagefromgallery.utils.Contracts.IMAGE_DIRECTORY
 import com.example.pickimagefromgallery.utils.Contracts.IMAGE_GALLERY_CODE
 import com.example.pickimagefromgallery.utils.Contracts.PERMISSION_CODE
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.String
 import java.util.*
 
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class PickImageFragment : Fragment() {
+class PickImageFragment : Fragment(), ImageAdapter.SetOnClickListener {
 
     private var _binding: FragmentPickImageBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +40,7 @@ class PickImageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentPickImageBinding.inflate(inflater, container, false)
@@ -121,13 +116,20 @@ class PickImageFragment : Fragment() {
     }
 
     private fun takePhotoFromCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, IMAGE_CAMERA_CODE)
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, IMAGE_CAMERA_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
+
+//        val selectedI: Uri? = data?.data
+//
+//        val file = File(String.valueOf(selectedI))
+//        file.delete()
+
+//        deleteImage()
 
         if (requestCode == IMAGE_GALLERY_CODE) {
             if (data != null) {
@@ -138,16 +140,17 @@ class PickImageFragment : Fragment() {
                         contentURI
                     )
 
-//                    val path = saveImage(imageFromGallery)
-                    Toast.makeText(requireContext(), "Image Saved!", Toast.LENGTH_SHORT).show()
+                    deleteImage(imageFromGallery)
 
                     imageModel = ImageModel(imageFromGallery)
                     listImageModel = ArrayList()
 
                     listImageModel.add(imageModel!!)
 
-                    imageAdapter = ImageAdapter(listImageModel)
+                    imageAdapter = ImageAdapter(listImageModel, this)
                     binding.pickImageRecyclerView.adapter = imageAdapter
+
+                    Toast.makeText(requireContext(), "Image Saved!", Toast.LENGTH_SHORT).show()
 
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -157,14 +160,16 @@ class PickImageFragment : Fragment() {
             }
 
         } else if (requestCode == IMAGE_CAMERA_CODE) {
+
             val imageFromCamera = data!!.extras!!.get("data") as Bitmap
 
+            deleteImage(imageFromCamera)
             imageModel = ImageModel(imageFromCamera)
             listImageModel = ArrayList()
 
             listImageModel.add(imageModel!!)
 
-            imageAdapter = ImageAdapter(listImageModel)
+            imageAdapter = ImageAdapter(listImageModel, this)
             binding.pickImageRecyclerView.adapter = imageAdapter
 
             Toast.makeText(requireActivity(), "Image Saved!", Toast.LENGTH_SHORT).show()
@@ -214,5 +219,13 @@ class PickImageFragment : Fragment() {
 
             }
         }
+    }
+
+    override fun deleteImage(bitmap: Bitmap) {
+
+        val file = File(String.valueOf(bitmap))
+        file.delete()
+
+        Toast.makeText(requireContext(), "image deleted", Toast.LENGTH_LONG).show()
     }
 }

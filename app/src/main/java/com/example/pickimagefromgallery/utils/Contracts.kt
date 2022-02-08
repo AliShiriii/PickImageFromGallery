@@ -7,7 +7,6 @@ object Contracts {
 
     const val IMAGE_CAMERA_CODE = 1001
 
-    const val IMAGE_DIRECTORY = "/demonuts"
     //Permission code
     const val PERMISSION_CODE = 2001
 
