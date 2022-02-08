@@ -14,7 +14,7 @@ class ImageAdapter(private val list: List<ImageModel>) :
 
         fun bind(imageModel: ImageModel) {
 
-            binding.pickImage.setImageURI(imageModel.image)
+            binding.pickImage.setImageBitmap(imageModel.bitmap)
 
         }
     }

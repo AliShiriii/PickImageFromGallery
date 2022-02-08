@@ -1,8 +1,8 @@
 package com.example.pickimagefromgallery.model
 
+import android.graphics.Bitmap
 import android.net.Uri
 
 data class ImageModel(
-    val id: Int,
-    val image: Uri?
-)
+    val bitmap: Bitmap
+    )
