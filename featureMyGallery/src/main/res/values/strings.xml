@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="add_photo_from">Add photo from: </string>
+    <string name="gallery">GALLERY</string>
+    <string name="camera">CAMERA</string>
+    <string name="add_photo">ADD PHOTO</string>
+    <string name="you_can_add_some_photos">you can add some photos</string>
+
+</resources>
