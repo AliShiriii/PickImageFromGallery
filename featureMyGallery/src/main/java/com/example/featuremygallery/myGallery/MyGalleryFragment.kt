@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
 import java.lang.String
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
@@ -31,7 +30,7 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
     private val binding get() = _binding!!
     private lateinit var myGalleryAdapter: MyGalleryAdapter
     private var imageModel: ImageModel? = null
-    private lateinit var listImageModel: ArrayList<ImageModel>
+    private lateinit var listImageModel: MutableList<ImageModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,11 +47,11 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        listImageModel = ArrayList()
         checkRuntimePermission()
         addPhoto()
         setOnClickOnGallery()
         setOnClickOnCamera()
-
     }
 
     private fun addPhoto() {
@@ -120,13 +119,6 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-//        val selectedI: Uri? = data?.data
-//
-//        val file = File(String.valueOf(selectedI))
-//        file.delete()
-
-//        deleteImage()
-
         if (requestCode == IMAGE_GALLERY_CODE) {
             if (data != null) {
                 val contentURI = data.data
@@ -137,12 +129,8 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
                     )
 
                     deleteImage(imageFromGallery)
-
                     imageModel = ImageModel(imageFromGallery)
-                    listImageModel = ArrayList()
-
                     listImageModel.add(imageModel!!)
-
                     myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
                     binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
@@ -160,11 +148,9 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
             val imageFromCamera = data!!.extras!!.get("data") as Bitmap
 
             deleteImage(imageFromCamera)
+
             imageModel = ImageModel(imageFromCamera)
-            listImageModel = ArrayList()
-
             listImageModel.add(imageModel!!)
-
             myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
             binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
@@ -172,6 +158,15 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
         }
 
         checkVisibility()
+    }
+
+    private fun setUpRecyclerView() {
+
+        listImageModel = ArrayList()
+        myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
+
+        binding.pickImageRecyclerView.adapter = myGalleryAdapter
+
     }
 
     private fun checkVisibility() {
@@ -212,7 +207,6 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
                 //Show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
-
             }
         }
     }

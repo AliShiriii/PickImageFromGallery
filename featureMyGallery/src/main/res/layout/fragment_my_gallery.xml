@@ -67,7 +67,7 @@
         android:background="@color/white"
         android:orientation="horizontal"
         android:padding="4dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,8 +1,8 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:12
-INJECTED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:12
-INJECTED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:12
+ADDED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:16
+INJECTED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:16
+INJECTED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:2:1-5:16
 	package
 		ADDED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml:3:5-37
 		INJECTED from C:\Users\Ali\Desktop\PickImageFromGallery\repository\src\main\AndroidManifest.xml
