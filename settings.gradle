@@ -10,3 +10,4 @@ rootProject.name = "PickImageFromGallery"
 include ':app'
 include ':featureMyGallery'
 include ':repository'
+include ':featureAddPhoto'

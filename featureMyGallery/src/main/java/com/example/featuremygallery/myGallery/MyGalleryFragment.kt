@@ -28,8 +28,8 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
     private var _binding: FragmentMyGalleryBinding? = null
     private val binding get() = _binding!!
-    private lateinit var myGalleryAdapter: MyGalleryAdapter
     private var imageModel: ImageModel? = null
+
     private lateinit var listImageModel: MutableList<ImageModel>
 
     override fun onCreateView(
@@ -144,6 +144,8 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
         super.onActivityResult(requestCode, resultCode, data)
 
+        val imageModel: ImageModel
+
         if (requestCode == IMAGE_GALLERY_CODE) {
             if (data != null) {
                 val contentURI = data.data
@@ -155,7 +157,7 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
                     deleteImage(imageFromGallery)
                     imageModel = ImageModel(imageFromGallery)
-                    listImageModel.add(imageModel!!)
+                    listImageModel.add(imageModel)
 
                     Toast.makeText(requireContext(), "Image Saved!", Toast.LENGTH_SHORT).show()
 
@@ -173,15 +175,20 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
             deleteImage(imageFromCamera)
 
             imageModel = ImageModel(imageFromCamera)
-            listImageModel.add(imageModel!!)
+            listImageModel.add(imageModel)
 
             Toast.makeText(requireActivity(), "Image Saved!", Toast.LENGTH_SHORT).show()
         }
 
-        myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
+        setUpRecyclerView()
+        checkVisibility()
+    }
+
+    private fun setUpRecyclerView() {
+
+        val myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
         binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
-        checkVisibility()
     }
 
     // check imageModel To be empty or not
