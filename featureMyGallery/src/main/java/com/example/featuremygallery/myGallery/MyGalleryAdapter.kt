@@ -35,22 +35,6 @@ class MyGalleryAdapter(private val list: List<ImageModel>, private val onClickLi
             }
         }
     }
-//
-//    private val diffCallBack = object : DiffUtil.ItemCallback<List<ImageModel>>() {
-//        override fun areItemsTheSame(oldItem: List<ImageModel>, newItem: List<ImageModel>): Boolean {
-//
-//            return oldItem == newItem
-//        }
-//
-//        override fun areContentsTheSame(oldItem: List<ImageModel>, newItem: List<ImageModel>): Boolean {
-//
-//            return oldItem == newItem
-//        }
-//
-//
-//    }
-//
-//    val differ = AsyncListDiffer(this, diffCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         return ImageViewHolder(

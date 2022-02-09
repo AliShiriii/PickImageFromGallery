@@ -54,6 +54,26 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
         setOnClickOnCamera()
     }
 
+    // Check permission
+    @SuppressLint("ObsoleteSdkInt")
+    private fun checkRuntimePermission() {
+
+        //Check runtime permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+
+                //Show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE)
+            }
+        }
+    }
+
+    // setOnClick on addPhoto
     private fun addPhoto() {
 
         binding.pickImageRecyclerView.visibility = View.GONE
@@ -74,6 +94,7 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
     }
 
+    // setOnClick on pickImageFromGallery
     private fun setOnClickOnGallery() {
 
         binding.apply {
@@ -86,6 +107,19 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
         }
     }
 
+    // get image from gallery
+    private fun choosePhotoFromGallery() {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+
+        galleryIntent.type = "image/*"
+
+        startActivityForResult(galleryIntent, IMAGE_GALLERY_CODE)
+    }
+
+    // setOnClick on pickImageFromCamera
     private fun setOnClickOnCamera() {
 
         binding.apply {
@@ -99,19 +133,10 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
         }
     }
 
-    private fun choosePhotoFromGallery() {
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-
-        galleryIntent.type = "image/*"
-
-        startActivityForResult(galleryIntent, IMAGE_GALLERY_CODE)
-    }
-
+    // get image from camera
     private fun takePhotoFromCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
         startActivityForResult(cameraIntent, IMAGE_CAMERA_CODE)
     }
 
@@ -131,8 +156,6 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
                     deleteImage(imageFromGallery)
                     imageModel = ImageModel(imageFromGallery)
                     listImageModel.add(imageModel!!)
-                    myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
-                    binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
                     Toast.makeText(requireContext(), "Image Saved!", Toast.LENGTH_SHORT).show()
 
@@ -151,24 +174,17 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
 
             imageModel = ImageModel(imageFromCamera)
             listImageModel.add(imageModel!!)
-            myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
-            binding.pickImageRecyclerView.adapter = myGalleryAdapter
 
             Toast.makeText(requireActivity(), "Image Saved!", Toast.LENGTH_SHORT).show()
         }
 
+        myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
+        binding.pickImageRecyclerView.adapter = myGalleryAdapter
+
         checkVisibility()
     }
 
-    private fun setUpRecyclerView() {
-
-        listImageModel = ArrayList()
-        myGalleryAdapter = MyGalleryAdapter(listImageModel, this)
-
-        binding.pickImageRecyclerView.adapter = myGalleryAdapter
-
-    }
-
+    // check imageModel To be empty or not
     private fun checkVisibility() {
 
         if (imageModel != null) {
@@ -193,24 +209,7 @@ class MyGalleryFragment : Fragment(), MyGalleryAdapter.SetOnClickListener {
         }
     }
 
-    @SuppressLint("ObsoleteSdkInt")
-    private fun checkRuntimePermission() {
-
-        //Check runtime permission
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            if (context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_DENIED
-            ) {
-                //permission denied
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-
-                //Show popup to request runtime permission
-                requestPermissions(permissions, PERMISSION_CODE)
-            }
-        }
-    }
-
+    //delete image from list
     override fun deleteImage(bitmap: Bitmap) {
 
         val file = File(String.valueOf(bitmap))
