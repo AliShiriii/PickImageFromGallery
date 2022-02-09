@@ -1,4 +1,7 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gallery">GALLERY</string>
+    <string name="camera">CAMERA</string>
+    <string name="you_can_add_some_photos">you can add some photos:</string>
 </resources>

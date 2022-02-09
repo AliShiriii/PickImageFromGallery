@@ -3,12 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/myGalleryFragment">
-
+    app:startDestination="@id/myGallery">
     <fragment
-        android:id="@+id/myGalleryFragment"
+        android:id="@+id/myGallery"
         android:name="com.example.featuremygallery.myGallery.MyGalleryFragment"
-        android:label="MyGalleryFragment"
+        android:label="MyGallery"
         tools:layout="@layout/fragment_my_gallery"
-        />
+        >
+        <action
+            android:id="@+id/action_myGalleryFragment3_to_addPhotoFragment3"
+            app:destination="@id/addPhoto" />
+        <argument
+            android:name="gallery"
+            app:argType="com.example.repository.model.ImageModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPhoto"
+        android:name="com.example.featureaddphoto.addPhoto.AddPhotoFragment"
+        android:label="AddPhotoFragment"
+        tools:layout="@layout/fragment_add_photo"
+        >
+        <action
+            android:id="@+id/action_addPhotoFragment3_to_myGalleryFragment3"
+            app:destination="@id/myGallery" />
+    </fragment>
 </navigation>
